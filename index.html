@@ -3,23 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lector de RSS</title>
+    <title>RSS Reader</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="app">
-        <h1>Lector de RSS con Texto a Voz</h1>
-        <input type="text" id="rss-url" placeholder="Introduce la URL del RSS">
-        <button id="load-feed">Cargar Feed</button>
-        
-        <!-- Sección para mostrar feeds guardados -->
-        <div id="saved-feeds">
-            <h2>Feeds Guardados</h2>
-        </div>
+    <header>
+        <h1>RSS Reader</h1>
+    </header>
 
-        <!-- Sección para mostrar artículos del feed seleccionado -->
-        <div id="articles"></div>
+    <div class="container">
+        <section id="add-feed">
+            <input type="text" id="rss-url" placeholder="Introduce el enlace RSS">
+            <button id="load-feed">Cargar Feed</button>
+        </section>
+
+        <section id="saved-feeds">
+            <h2>Feeds Guardados</h2>
+            <!-- Aquí se mostrarán los feeds guardados -->
+        </section>
+
+        <section id="articles">
+            <h2>Artículos</h2>
+            <!-- Aquí se mostrarán los artículos del feed -->
+        </section>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>

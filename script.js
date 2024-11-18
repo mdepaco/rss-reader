@@ -40,6 +40,26 @@ function displayArticles(articles) {
 function speakText(text) {
     const speech = new SpeechSynthesisUtterance(text);
     speech.lang = "es-ES"; // Ajusta el idioma a español
+
+    let voices = window.speechSynthesis.getVoices();
+    if (voices.length === 0) {
+        window.speechSynthesis.onvoiceschanged = function() {
+            voices = window.speechSynthesis.getVoices();
+            selectVoiceAndSpeak(voices, speech);
+        };
+    } else {
+        selectVoiceAndSpeak(voices, speech);
+    }
+}
+
+function selectVoiceAndSpeak(voices, speech) {
+    // Elige la primera voz en español
+    for (let i = 0; i < voices.length; i++) {
+        if (voices[i].lang.startsWith("es")) {
+            speech.voice = voices[i];
+            break;
+        }
+    }
     window.speechSynthesis.speak(speech);
 }
 
@@ -88,4 +108,6 @@ function deleteFeed(url) {
 
 // Actualizar feeds cada 10 minutos (600,000 ms)
 setInterval(loadSavedFeeds, 600000);
+
+
 
