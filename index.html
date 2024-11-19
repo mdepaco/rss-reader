@@ -4,29 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RSS Reader</title>
+    
+    <!-- Enlace al manifest.json -->
+    <!--<link rel="manifest" href="manifest.json"> -->
+
+    <!-- Favicon -->
+    <link rel="icon" href="path_to_your_logo/favicon.ico" type="image/x-icon">
+    
+    <!-- Añadir Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Material+Icons" rel="stylesheet">
+
+    <!-- Estilos -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-        <h1>RSS Reader</h1>
+        <h1>Lectura RSS</h1>
+        <p>Lee artículos de tus feeds favoritos con solo un clic.</p>
     </header>
 
-    <div class="container">
-        <section id="add-feed">
-            <input type="text" id="rss-url" placeholder="Introduce el enlace RSS">
-            <button id="load-feed">Cargar Feed</button>
-        </section>
+    <main>
+        <section class="container">
+            <aside class="sidebar">
+                <h3>Mis Feeds Guardados</h3>
+                <div id="saved-feeds"></div>
 
-        <section id="saved-feeds">
-            <h2>Feeds Guardados</h2>
-            <!-- Aquí se mostrarán los feeds guardados -->
-        </section>
+                <div class="input-group">
+                    <input type="text" id="rss-url" placeholder="Pega el enlace RSS aquí...">
+                    <button id="load-feed">Añadir Feed</button>
+                </div>
+            </aside>
 
-        <section id="articles">
-            <h2>Artículos</h2>
-            <!-- Aquí se mostrarán los artículos del feed -->
+            <section class="main-content">
+                <div id="articles"></div>
+            </section>
         </section>
-    </div>
+    </main>
 
     <script src="script.js"></script>
 </body>

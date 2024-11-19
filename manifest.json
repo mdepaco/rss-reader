@@ -1,0 +1,27 @@
+{
+  "name": "RSS Reader",
+  "short_name": "RSS Reader",
+  "description": "Lee artículos de tus feeds favoritos",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#3498db",
+  "theme_color": "#3498db",
+  "icons": [
+    {
+      "src": "path_to_your_logo/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "path_to_your_logo/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "path_to_your_logo/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
+
