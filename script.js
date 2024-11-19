@@ -9,6 +9,7 @@ function addFeed() {
         return;
     }
 
+    // Guardar feed y cargar artículos
     saveFeed(url);
     loadRSS(url);
 }
@@ -29,11 +30,12 @@ function saveFeed(url) {
     getFeedTitle(url).then(title => {
         const feed = { url, title };
 
+        // Obtener feeds guardados desde localStorage
         const feeds = JSON.parse(localStorage.getItem("feeds")) || [];
         if (!feeds.some(f => f.url === url)) {
             feeds.push(feed);
             localStorage.setItem("feeds", JSON.stringify(feeds));
-            displaySavedFeeds(); // Para actualizar la lista de feeds guardados
+            displaySavedFeeds(); // Actualizar la lista de feeds guardados
         }
     });
 }
@@ -59,13 +61,14 @@ function loadRSS(url) {
         .then(response => response.json())
         .then(data => {
             console.log(data);  // Verifica si los datos están llegando correctamente
-            displayArticles(data.items);
+            if (data && data.items) {
+                displayArticles(data.items, data.feed.title); // Mostrar artículos con el título del feed
+            }
         })
         .catch(error => {
             console.error("Error al cargar el RSS:", error);
         });
 }
-
 
 // Mostrar artículos en la interfaz
 function displayArticles(articles, feedTitle) {
@@ -80,6 +83,7 @@ function displayArticles(articles, feedTitle) {
     // Mostrar artículos
     articles.forEach(article => {
         const articleElement = document.createElement("article");
+        articleElement.classList.add("article-item");
         articleElement.innerHTML = `
             <h3>${article.title}</h3>
             <p>${article.description}</p>
@@ -137,13 +141,21 @@ function getFaviconUrl(url) {
     return faviconUrl;
 }
 
-
 // Eliminar un feed guardado
 function deleteFeed(url) {
     const feeds = JSON.parse(localStorage.getItem("feeds")) || [];
     const updatedFeeds = feeds.filter(feed => feed.url !== url);
     localStorage.setItem("feeds", JSON.stringify(updatedFeeds));
-    displaySavedFeeds();
+    displaySavedFeeds(); // Actualizar la lista de feeds
 }
+
+// Cargar los feeds guardados al inicio
+window.onload = () => {
+    displaySavedFeeds();
+
+    // Añadir un evento al botón para agregar feeds
+    const loadFeedButton = document.getElementById("load-feed");
+    loadFeedButton.addEventListener("click", addFeed);
+};
 
 
