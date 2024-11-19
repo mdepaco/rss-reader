@@ -1,3 +1,5 @@
+let articlesCount = 10; // Número de artículos a cargar inicialmente
+
 // Añadir un nuevo feed
 function addFeed() {
     const url = document.getElementById("rss-url").value.trim();
@@ -46,23 +48,34 @@ function getFeedTitle(url) {
     return fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
-            // Asegurarnos de que el título se obtenga de la propiedad 'feed'
             if (data && data.feed && data.feed.title) {
                 return data.feed.title; // El título del feed
             }
-            return 'Sin título'; // Si no se encuentra el título, usamos un valor predeterminado
+            return 'Sin título'; // Si no se encuentra el título, usamos 'Sin título'
         })
         .catch(() => 'Sin título'); // Si no se puede obtener el título, usamos 'Sin título'
 }
 
 // Cargar y mostrar artículos del feed
 function loadRSS(url) {
-    fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(url)}`)
+    // Verificamos si ya tenemos artículos guardados en localStorage
+    const storedArticles = JSON.parse(localStorage.getItem(url));
+    if (storedArticles && storedArticles.length > 0) {
+        displayArticles(storedArticles, url); // Mostrar artículos guardados
+    } else {
+        fetchArticles(url); // Si no están guardados, los descargamos
+    }
+}
+
+// Cargar artículos desde la API RSS2JSON
+function fetchArticles(url) {
+    fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(url)}&count=${articlesCount}`)
         .then(response => response.json())
         .then(data => {
-            console.log(data);  // Verifica si los datos están llegando correctamente
             if (data && data.items) {
-                displayArticles(data.items, data.feed.title); // Mostrar artículos con el título del feed
+                const articles = data.items;
+                localStorage.setItem(url, JSON.stringify(articles)); // Guardamos los artículos en localStorage
+                displayArticles(articles, url); // Mostrar los artículos cargados
             }
         })
         .catch(error => {
@@ -71,16 +84,11 @@ function loadRSS(url) {
 }
 
 // Mostrar artículos en la interfaz
-function displayArticles(articles, feedTitle) {
+function displayArticles(articles, url) {
     const articlesContainer = document.getElementById("articles");
-    articlesContainer.innerHTML = "";
+    articlesContainer.innerHTML = ""; // Limpiar artículos previos
 
-    // Mostrar el título del feed en la parte superior de los artículos
-    const feedTitleElement = document.createElement("h2");
-    feedTitleElement.innerText = feedTitle;
-    articlesContainer.appendChild(feedTitleElement);
-
-    // Mostrar artículos
+    // Mostrar los artículos
     articles.forEach(article => {
         const articleElement = document.createElement("article");
         articleElement.classList.add("article-item");
@@ -92,6 +100,21 @@ function displayArticles(articles, feedTitle) {
         articleElement.querySelector(".speak").addEventListener("click", () => speakText(article.description));
         articlesContainer.appendChild(articleElement);
     });
+
+    // Añadir el botón "Cargar más" si hay más artículos disponibles
+    if (articles.length >= articlesCount) {
+        const loadMoreButton = document.createElement("button");
+        loadMoreButton.textContent = "Cargar más";
+        loadMoreButton.classList.add("load-more");
+        loadMoreButton.addEventListener("click", () => loadMoreArticles(url));
+        articlesContainer.appendChild(loadMoreButton);
+    }
+}
+
+// Cargar más artículos cuando el usuario hace clic en "Cargar más"
+function loadMoreArticles(url) {
+    articlesCount += 10; // Aumentamos el número de artículos que queremos cargar
+    fetchArticles(url); // Cargamos más artículos del mismo feed
 }
 
 // Hablar texto usando SpeechSynthesis
@@ -127,10 +150,16 @@ function displaySavedFeeds() {
         const faviconUrl = getFaviconUrl(feed.url);
         feedElement.innerHTML = `
             <img src="${faviconUrl}" alt="favicon" width="20" height="20">
-            <span>${feed.title}</span>
+            <span class="feed-title">${feed.title}</span>
             <button class="delete-feed">Eliminar</button>
         `;
+        
+        // Evento para eliminar el feed
         feedElement.querySelector(".delete-feed").addEventListener("click", () => deleteFeed(feed.url));
+
+        // Evento para cargar los artículos del feed cuando se haga clic en el nombre del feed
+        feedElement.querySelector(".feed-title").addEventListener("click", () => loadRSS(feed.url));
+
         feedsContainer.appendChild(feedElement);
     });
 }
@@ -157,5 +186,6 @@ window.onload = () => {
     const loadFeedButton = document.getElementById("load-feed");
     loadFeedButton.addEventListener("click", addFeed);
 };
+
 
 
