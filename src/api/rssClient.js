@@ -1,5 +1,5 @@
 // src/api/rssClient.js
-import { DEFAULT_ARTICLES_COUNT } from '../constants/constants.js';
+import { DEFAULT_ARTICLES_COUNT } from '../constants/appConstants.js';
 
 const RSS2JSON_ENDPOINT = 'https://api.rss2json.com/v1/api.json';
 
