@@ -5,17 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lector RSS</title>
 
-  <!-- ==== Bootstrap 5 ==== -->
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-    integrity="sha384-ENjdO4Dr2bkBIFxQpeoYz1HkU1K/6U6W2v+ZrG5q5c5X5d5J5x5f5y5z5w5v5u5t"
-    crossorigin="anonymous">
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-  <!-- ==== Tailwind (via CDN) ==== -->
+  <!-- Tailwind (CDN) -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- ==== Custom Tailwind configuration (colors, spacing, etc.) ==== -->
+  <!-- Configuración de Tailwind (colores, espaciado, fuente) -->
   <script>
     tailwind.config = {
       theme: {
@@ -42,73 +40,18 @@
     };
   </script>
 
-  <!-- ==== Google Font (Roboto) ==== -->
+  <script type="module" src="./src/app/init.js"></script>
+
+  <!-- Fuente Roboto -->
   <link
     href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
     rel="stylesheet">
-
-  <!-- ==== Your own stylesheet (optional, for extra tweaks) ==== -->
-  <style>
-    /* Reset some default margins/paddings that clash with Tailwind */
-    body { margin:0; font-family: var(--font-sans); }
-
-    /* Header styling – we keep the same look as before */
-    header {
-      @apply text-center p-5 bg-primary text-white;
-    }
-
-    /* Sidebar – Bootstrap card + Tailwind utilities */
-    .sidebar {
-      @apply bg-bgSidebar p-4 rounded shadow-sm;
-    }
-
-    /* Main content area */
-    .main-content {
-      @apply p-4;
-    }
-
-    /* Feed item */
-    .feed-item {
-      @apply flex items-center justify-between p-2 border border-gray-200 rounded mb-2;
-    }
-    .feed-item img { @apply mr-2 w-5 h-5; }
-
-    /* Buttons – reuse Tailwind utilities */
-    .btn-primary {
-      @apply bg-primary text-white py-2 px-4 rounded hover:bg-primaryDark transition-colors;
-    }
-    .btn-danger {
-      @apply bg-danger text-white py-2 px-4 rounded hover:bg-dangerDark transition-colors;
-    }
-
-    /* Article cards */
-    #articles article {
-      @apply p-4 mb-4 bg-bgLight rounded shadow-sm;
-    }
-    #articles h3 { @apply text-lg mb-2; }
-
-    /* Speak button */
-    button.speak {
-      @apply btn-primary;
-    }
-
-    /* Load‑more button */
-    .load-more {
-      @apply btn-primary mt-4;
-    }
-
-    /* Responsive tweaks – Tailwind already handles most of them,
-       but we add a tiny breakpoint for the header size */
-    @media (max-width: 480px) {
-      header h1 { @apply text-xl; }
-    }
-  </style>
 </head>
 
 <body class="bg-white">
 
   <!-- ==================== HEADER ==================== -->
-  <header>
+  <header class="text-center p-5 bg-primary text-white">
     <h1 class="mb-1">Lector RSS</h1>
     <p class="mb-0">Introduce la URL de un feed y explora sus artículos.</p>
   </header>
@@ -118,31 +61,30 @@
 
     <div class="row g-4">
 
-      <!-- ---------- SIDEBAR (Bootstrap col) ---------- -->
-      <aside class="col-12 col-md-4 col-lg-3 sidebar">
-
+      <!-- ---------- SIDEBAR ---------- -->
+      <aside class="col-12 col-md-4 col-lg-3 bg-bgSidebar p-4 rounded shadow-sm">
         <h3 class="mb-3">Feeds guardados</h3>
 
-        <!-- Aquí se insertarán los feeds guardados -->
+        <!-- Lista de feeds guardados -->
         <div id="saved-feeds"></div>
 
-        <!-- Formulario para añadir un nuevo feed -->
+        <!-- Formulario para añadir feed -->
         <div class="mt-4">
           <label for="rss-url" class="form-label">URL del feed RSS</label>
           <input type="text"
                  id="rss-url"
                  class="form-control mb-2"
                  placeholder="https://ejemplo.com/feed.xml">
-          <button id="load-feed" class="btn btn-primary w-100">Añadir feed</button>
+          <button id="load-feed"
+                  class="btn btn-primary w-100">Añadir feed</button>
         </div>
       </aside>
 
-      <!-- ---------- MAIN CONTENT (Bootstrap col) ---------- -->
-      <section class="col-12 col-md-8 col-lg-9 main-content">
-
+      <!-- ---------- MAIN CONTENT ---------- -->
+      <section class="col-12 col-md-8 col-lg-9 p-4">
         <h3 class="mb-3">Artículos</h3>
 
-        <!-- Aquí se renderizarán los artículos -->
+        <!-- Artículos renderizados aquí -->
         <div id="articles"></div>
       </section>
 
@@ -150,13 +92,12 @@
   </div> <!-- /.container-fluid -->
 
   <!-- ==================== SCRIPTS ==================== -->
-  <!-- Bootstrap bundle (includes Popper) -->
   <script
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+6n5Q5b5V5a5c5d5e5f5g5h5i5j5k"
     crossorigin="anonymous"></script>
 
-  <!-- Your application entry point (ES‑module) -->
+  <!-- Tu código de la app -->
   <script type="module" src="./src/app/init.js"></script>
 </body>
 </html>
