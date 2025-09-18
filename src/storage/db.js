@@ -1,6 +1,5 @@
 
 import { openDB } from 'https://cdn.jsdelivr.net/npm/idb@7.1.1?module';
-let dbPromise = null;
 
 export function openDBInstance() {
   if (!dbPromise) {
