@@ -1,5 +1,5 @@
-import { renderSavedFeeds } from '../ui/feedsRenderer.js';
-import { initAddFeedForm } from '../ui/addFeedForm.js';
+import { addFeed } from '../controllers/feedController.js';
+import { loadAndRenderFeed } from '../controllers/articleController.js';
 
 window.addEventListener('DOMContentLoaded', async () => {
   await renderSavedFeeds(document.getElementById('saved-feeds'));
