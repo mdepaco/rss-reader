@@ -1,4 +1,4 @@
-import { openDB } from 'https://unpkg.com/idb?module';
+import { openDB } from 'https://cdn.jsdelivr.net/npm/idb?module';
 
 let dbPromise = null;
 
