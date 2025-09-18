@@ -1,0 +1,9 @@
+/* src/css/layout/_header.css */
+@import '../utils/_variables.css';
+
+header {
+  text-align: center;
+  padding: var(--sp-lg);
+  background-color: var(--c-primary);
+  color: #fff;
+}

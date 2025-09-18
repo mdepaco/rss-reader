@@ -1,0 +1,23 @@
+/* src/css/components/_buttons.css */
+@import '../utils/_variables.css';
+
+/* Aquí puedes colocar variantes genéricas que luego extiendas */
+.btn {
+  display: inline-block;
+  padding: var(--sp-xs) var(--sp-sm);
+  font-size: var(--fs-base);
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.btn-primary {
+  background-color: var(--c-primary);
+  color: #fff;
+}
+.btn-primary:hover { background-color: var(--c-primary-dark); }
+
+.btn-danger {
+  background-color: var(--c-danger);
+  color: #fff;
+}
+.btn-danger:hover { background-color: var(--c-danger-dark); }

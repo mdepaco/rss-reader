@@ -1,0 +1,35 @@
+/* src/css/utils/_variables.css */
+
+/* Paleta de colores */
+:root {
+  --c-primary: #007BFF;
+  --c-primary-dark: #0056b3;
+  --c-danger: #FF5733;
+  --c-danger-dark: #D43F1A;
+  --c-bg-light: #f9f9f9;
+  --c-bg-sidebar: #f4f4f4;
+  --c-bg-card: #ffffff;
+  --c-text: #333333;
+}
+
+/* Tipografía */
+:root {
+  --ff-base: 'Roboto', sans-serif;
+  --fs-base: 1rem;
+  --fs-h1: 2em;
+  --fs-h3: 1.5em;
+}
+
+/* Espaciado */
+:root {
+  --sp-xs: 0.5rem;
+  --sp-sm: 0.75rem;
+  --sp-md: 1rem;
+  --sp-lg: 1.5rem;
+}
+
+/* Breakpoints */
+:root {
+  --bp-tablet: 768px;
+  --bp-mobile: 480px;
+}

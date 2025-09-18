@@ -1,0 +1,32 @@
+/* src/css/components/_cards.css */
+@import '../utils/_variables.css';
+
+#articles article {
+  padding: var(--sp-sm);
+  margin-bottom: var(--sp-sm);
+  background-color: var(--c-bg-light);
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0,0,0,.1);
+}
+#articles h3 {
+  font-size: 1.3em;
+  margin-bottom: var(--sp-xs);
+}
+
+/* Botón “Escuchar” */
+button.speak {
+  padding: var(--sp-xs) var(--sp-sm);
+  background-color: var(--c-primary);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+button.speak:hover {
+  background-color: var(--c-primary-dark);
+}
+
+/* Botón “Cargar más” (se reutiliza el estilo de .speak) */
+.load-more {
+  @extend button.speak;   /* si usas pre‑procesador; si no, repite las reglas */
+  margin-top: var(--sp-sm);
+}

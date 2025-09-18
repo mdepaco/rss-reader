@@ -1,0 +1,29 @@
+/* src/css/base/_typography.css */
+@import '../utils/_variables.css';
+
+html {
+  font-family: var(--ff-base);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--c-text);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+h1 {
+  margin: 0;
+  font-size: var(--fs-h1);
+}
+
+h3 {
+  margin-top: 0;
+  font-size: var(--fs-h3);
+}
+
+p {
+  margin: var(--sp-sm) 0;
+}

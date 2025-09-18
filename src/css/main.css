@@ -1,0 +1,11 @@
+/* src/css/main.css */
+
+/* Importar todo en orden lógico */
+@import './base/_reset.css';          /* opcional */
+@import './base/_typography.css';
+@import './layout/_header.css';
+@import './layout/_grid.css';
+@import './components/_sidebar.css';
+@import './components/_cards.css';
+@import './components/_buttons.css';
+@import './utils/_variables.css';

@@ -1,0 +1,54 @@
+/* src/css/components/_sidebar.css */
+@import '../utils/_variables.css';
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-sm);
+  margin-top: var(--sp-lg);
+}
+
+#rss-url {
+  padding: var(--sp-sm);
+  font-size: var(--fs-base);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Botón “Agregar feed” */
+#load-feed {
+  padding: var(--sp-sm);
+  font-size: var(--fs-base);
+  background-color: var(--c-primary);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+#load-feed:hover {
+  background-color: var(--c-primary-dark);
+}
+
+/* Feeds guardados */
+.feed-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--sp-sm);
+  border: 1px solid #ddd;
+  margin-bottom: var(--sp-sm);
+  border-radius: 5px;
+}
+.feed-item img {
+  width: 20px;
+  height: 20px;
+  margin-right: var(--sp-xs);
+}
+.feed-item button {
+  background-color: var(--c-danger);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+.feed-item button:hover {
+  background-color: var(--c-danger-dark);
+}
