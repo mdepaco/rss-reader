@@ -12,7 +12,7 @@ export async function saveArticles(feedId, items) {
   });
 }
 
-export async function getArticlesByFeed(feedId) {
+export async function getArticles(feedId) {
   const db = await getDB();
   return new Promise((res, rej) => {
     const tx = db.transaction('articles', 'readonly');
