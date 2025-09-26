@@ -1,5 +1,5 @@
 // src/api/rssClient.js
-import RSSParser from 'https://cdn.jsdelivr.net/npm/rss-parser-browser@3.13.0';
+import RSSParser from 'https://cdn.jsdelivr.net/npm/@jarryd999/rss-parser-browser@1.0.6';
 
 const parser = new RSSParser();
 
