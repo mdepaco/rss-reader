@@ -14,9 +14,4 @@ Esta es una aplicación web sencilla para leer y escuchar artículos de feeds RS
 1. Un navegador moderno con soporte para la API de síntesis de voz.
 2. **eSpeak NG** o alguna otra implementación de síntesis de voz en tu sistema.
 
-## Instalación
-
-1. Clona este repositorio a tu máquina local:
-   ```bash
-   git clone https://github.com/tu-usuario/rss-reader.git
 
