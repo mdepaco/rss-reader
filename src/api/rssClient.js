@@ -1,5 +1,6 @@
 // src/api/rssClient.js
-const parser = window.RSSParser();
+const RSSParser = window.RSSParser;
+const parser = new RSSParser();
 
 /**
  * Obtiene y parsea un feed RSS/Atom.
