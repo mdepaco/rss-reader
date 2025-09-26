@@ -1,5 +1,4 @@
 // src/api/rssClient.js
-// src/api/rssClient.js
 import RSSParser from 'https://cdn.skypack.dev/rss-parser-browser@3.13.0';
 
 const parser = new RSSParser();
@@ -10,12 +9,11 @@ const parser = new RSSParser();
  * @returns {Promise<{feed:object, items:Array<object>}>}
  */
 export async function downloadAndParse(url) {
-  // Intentamos fetch directo; si el servidor no permite CORS, el error se captura aquí.
   const resp = await fetch(url, { mode: 'cors' });
   if (!resp.ok) throw new Error(`Error ${resp.status} al obtener el feed`);
 
-  const xml = await resp.text();               // XML como cadena
-  const parsed = await parser.parseString(xml); // → {title, items[…]}
+  const xml = await resp.text();               
+  const parsed = await parser.parseString(xml); 
   return {
     feed: { title: parsed.title, link: parsed.link },
     items: parsed.items.map(i => ({
