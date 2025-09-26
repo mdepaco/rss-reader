@@ -1,24 +1,18 @@
 // src/app/init.js
 import { addFeed } from '../controllers/feedController.js';
-import { loadAndRenderFeed } from '../controllers/articleController.js';
 import { renderSavedFeeds } from '../ui/feedsRenderer.js';
+import { resetApp } from '../utils/resetApp.js';   // ← IMPORTANTE
 
 document.addEventListener('DOMContentLoaded', () => {
-  const btn = document.getElementById('load-feed'); 
-  if (!btn) {
-    console.error('❌ Botón #load-feed no encontrado');
-    return;
-  }
-  btn.addEventListener('click', addFeed);
-  console.log('✅ Listener registrado en #load-feed');
+  // --- Botón de añadir feed -------------------------------------------------
+  const btnAdd = document.getElementById('load-feed');
+  if (btnAdd) btnAdd.addEventListener('click', addFeed);
 
-  // Renderizado inicial de feeds guardados
+  // --- Renderizado inicial de feeds guardados --------------------------------
   const savedContainer = document.getElementById('saved-feeds');
   if (savedContainer) renderSavedFeeds(savedContainer);
-  else console.warn('⚠️ Contenedor #saved-feeds no encontrado');
 
-  // Carga automática vía query string (opcional)
-  const params = new URLSearchParams(window.location.search);
-  const feedUrl = params.get('feed');
-  if (feedUrl) loadAndRenderFeed(feedUrl);
+  // --- Botón de “Restablecer datos” ----------------------------------------
+  const btnReset = document.getElementById('reset-button');
+  if (btnReset) btnReset.addEventListener('click', resetApp);
 });

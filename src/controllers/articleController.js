@@ -1,9 +1,8 @@
 // src/controllers/articleController.js
 /* --------------------------------------------------------------
-   Controlador de artículos – responsable de cargar y mostrar los
-   artículos de un feed almacenado en IndexedDB.
+   Controlador de artículos – carga y muestra los artículos de un
+   feed almacenado en IndexedDB.
    -------------------------------------------------------------- */
-
 import { getFeedByUrl } from '../storage/feedRepository.js';
 import { getArticles } from '../storage/articleRepository.js';
 import { renderArticles } from '../ui/articlesRenderer.js';
@@ -24,8 +23,11 @@ export async function loadAndRenderFeed(url) {
     }
 
     // 2️⃣ Obtener los últimos N artículos (N configurable)
-    const articles = await getArticles(feed.id, 20); // 20 = máximo a mostrar
-    if (!articles || articles.length === 0) {
+    // getArticles devuelve TODOS los artículos; limitamos a 20 aquí:
+    const allArticles = await getArticles(feed.id); // o await getArticlesByFeed(feed.id);
+    const articles = allArticles.slice(0, 20); // máximo a mostrar
+
+    if (!articles.length) {
       alert('No hay artículos guardados para este feed.');
       return;
     }

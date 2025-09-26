@@ -1,29 +1,29 @@
-import { deleteFeed, getAllFeeds } from '../storage/feedRepository.js';
-import { loadRSS } from '../api/rssClient.js';
-import { getFaviconUrl } from '../utils/favicon.js';
+// src/ui/feedsRenderer.js
+import { getAllFeeds } from '../storage/feedRepository.js';
+import { loadAndRenderFeed } from '../controllers/articleController.js';
 
-export async function renderSavedFeeds(containerEl) {
+export async function renderSavedFeeds(container) {
   const feeds = await getAllFeeds();
-  containerEl.innerHTML = '';
+  container.innerHTML = '';
 
-  feeds.forEach(feed => {
+  if (!feeds.length) {
+    container.innerHTML = '<p class="text-muted">No hay feeds guardados.</p>';
+    return;
+  }
+
+  feeds.forEach(f => {
     const div = document.createElement('div');
-    div.className = 'feed-item';
+    div.className = 'd-flex justify-content-between align-items-center mb-2';
     div.innerHTML = `
-      <img src="${getFaviconUrl(feed.url)}" alt="favicon" width="20" height="20">
-      <span class="feed-title">${feed.title}</span>
-      <button class="delete-feed">Eliminar</button>
+      <span class="flex-grow-1 text-truncate">${f.title}</span>
+      <button class="btn btn-sm btn-outline-primary load-feed" data-url="${f.url}">Abrir</button>
     `;
+    container.appendChild(div);
+  });
 
-    div.querySelector('.delete-feed')
-      .addEventListener('click', async () => {
-        await deleteFeed(feed.id);
-        renderSavedFeeds(containerEl); // refrescar
-      });
-
-    div.querySelector('.feed-title')
-      .addEventListener('click', () => loadRSS(feed.url));
-
-    containerEl.appendChild(div);
+  container.addEventListener('click', e => {
+    if (e.target.matches('.load-feed')) {
+      loadAndRenderFeed(e.target.dataset.url);
+    }
   });
 }

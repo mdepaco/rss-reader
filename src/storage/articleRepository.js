@@ -1,25 +1,24 @@
-import { getDb } from './db.js';
-const ARTICLE_STORE = 'articles';
+// src/storage/articleRepository.js
+import { getDB } from './db.js';
 
-/**
- * Guarda un lote de artículos asociados a un feed.
- * @param {number} feedId Id del feed en IndexedDB
- * @param {Array<Object>} articles Lista de objetos article
- */
-export async function saveArticles(feedId, articles) {
-  const db = await getDb();
-  const tx = db.transaction(ARTICLE_STORE, 'readwrite');
-  for (const art of articles) {
-    await tx.store.add({ ...art, feedId });
-  }
-  await tx.done;
+export async function saveArticles(feedId, items) {
+  const db = await getDB();
+  return new Promise((res, rej) => {
+    const tx = db.transaction('articles', 'readwrite');
+    const store = tx.objectStore('articles');
+    items.forEach(it => store.put({ feedId, ...it }));
+    tx.oncomplete = () => res();
+    tx.onerror = e => rej(e.target.error);
+  });
 }
 
-/**
- * Recupera los artículos de un feed (ordenados por fecha descendente).
- */
 export async function getArticlesByFeed(feedId) {
-  const db = await getDb();
-  const idx = db.transaction(ARTICLE_STORE).store.index('feedId');
-  return idx.getAll(IDBKeyRange.only(feedId));
+  const db = await getDB();
+  return new Promise((res, rej) => {
+    const tx = db.transaction('articles', 'readonly');
+    const idx = tx.objectStore('articles').index('feedId');
+    const req = idx.getAll(IDBKeyRange.only(feedId));
+    req.onsuccess = () => res(req.result);
+    req.onerror = e => rej(e.target.error);
+  });
 }

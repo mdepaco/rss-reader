@@ -1,29 +1,28 @@
 // src/api/rssClient.js
-import { DEFAULT_ARTICLES_COUNT } from '../constants/appConstants.js';
+import RSSParser from 'https://cdn.skypack.dev/rss-parser@3.13.0';
 
-const RSS2JSON_ENDPOINT = 'https://api.rss2json.com/v1/api.json';
-
-/**
- * Obtiene el feed completo (título + items) desde rss2json.
- * @param {string} url  URL del RSS original
- * @param {number} count  Nº máximo de items (0 → solo meta)
- * @returns {Promise<Object>}  {feed, items}
- */
-export async function fetchFeed(url, count = DEFAULT_ARTICLES_COUNT) {
-  const endpoint = `${RSS2JSON_ENDPOINT}?rss_url=${encodeURIComponent(
-    url,
-  )}&count=${count}`;
-  const resp = await fetch(endpoint);
-  if (!resp.ok) throw new Error(`RSS fetch error ${resp.status}`);
-  const data = await resp.json();
-  if (data.status !== 'ok') throw new Error('RSS API returned error');
-  return data; // {feed:{title,...}, items:[...] }
-}
+const parser = new RSSParser();
 
 /**
- * Sólo devuelve el título del feed (útil al guardar).
+ * Obtiene y parsea un feed RSS/Atom.
+ * @param {string} url URL completa del feed.
+ * @returns {Promise<{feed:object, items:Array<object>}>}
  */
-export async function fetchFeedTitle(url) {
-  const data = await fetchFeed(url, 0);
-  return data.feed?.title ?? 'Sin título';
+export async function downloadAndParse(url) {
+  // Intentamos fetch directo; si el servidor no permite CORS, el error se captura aquí.
+  const resp = await fetch(url, { mode: 'cors' });
+  if (!resp.ok) throw new Error(`Error ${resp.status} al obtener el feed`);
+
+  const xml = await resp.text();               // XML como cadena
+  const parsed = await parser.parseString(xml); // → {title, items[…]}
+  return {
+    feed: { title: parsed.title, link: parsed.link },
+    items: parsed.items.map(i => ({
+      title: i.title,
+      link: i.link,
+      pubDate: i.pubDate,
+      content: i.content || i['content:encoded'] || '',
+      snippet: i.contentSnippet || ''
+    }))
+  };
 }
