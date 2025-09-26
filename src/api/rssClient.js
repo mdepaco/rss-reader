@@ -1,5 +1,5 @@
 // src/api/rssClient.js
-// src/api/rssClient.js   ← opción B
+// src/api/rssClient.js
 import RSSParser from 'https://cdn.skypack.dev/rss-parser-browser@3.13.0';
 
 const parser = new RSSParser();
